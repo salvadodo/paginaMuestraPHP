@@ -58,34 +58,90 @@
             <h1 class="font-weight-bold text-primary">Tipos de Casa</h1>
             <div class="row h4">
                 <div class="card mb-3 mb-lg-0 col-md-6 col-lg-3">
-                    <img class="card-img-top h-100" src="/images/Casas Pequeñas.jpg" alt="Imagen Casa 1">
+                    <img class="card-img-top h-100" src="images/Casas Pequeñas.jpg" alt="Imagen Casa 1">
                     <div class="card-body"> Casas Pequeñas </div>
                 </div>
                 <div class="card mb-3 mb-lg-0 col-md-6 col-lg-3">
-                    <img class="card-img-top h-100" src="/images/Casas Medianas.jpg" alt="Imagen Casa 2">
+                    <img class="card-img-top h-100" src="images/Casas Medianas.jpg" alt="Imagen Casa 2">
                     <div class="card-body"> Casas Medianas </div>
                 </div>
                 <div class="card mb-3 mb-lg-0 col-md-6 col-lg-3">
-                    <img class="card-img-top h-100" src="/images/Casas Grandes.jpg" alt="Imagen Casa 3">
+                    <img class="card-img-top h-100" src="images/Casas Grandes.jpg" alt="Imagen Casa 3">
                     <div class="card-body"> Casas Grandes </div>
                 </div>
                 <div class="card mb-3 mb-lg-0 col-md-6 col-lg-3">
-                    <img class="card-img-top h-100" src="/images/Casas de Lujo.jpg" alt="Imagen Casa 4">
+                    <img class="card-img-top h-100" src="images/Casas de Lujo.jpg" alt="Imagen Casa 4">
                     <div class="card-body"> Casas de Lujo </div>
                 </div>   
             </div>
         </div>                 
     </section>
-
+    <section class="formulario py-4">
+        <div class="cldatosCasa" id="iddatosCasa"></div>        
+        <!-- <div class="cldatosCasa" id="iddatosCasa" onload="cargarReg()"></div> -->
+    </section>
     <footer class="piedepagina bg-dark text-white text-center text-md-right">
         <div class="container">
             <p class="m-0 py-4">Copyright © 2021. Todos los derechos reservados.</p>
         </div>
     </footer>
-      
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        //Forma 2
+        $(function () {
+            $("#iddatosCasa").show(function () {
+                //var a = $("#idnombre").val();
+                //var b = $("#idcorreo").val();
+                //var cadPass = "Nombre=" + a + "&Correo=" + b;
+                //var cadPass = JSON.stringify({ Nombre: a, Correo: b });
+                $.post({
+                    url: "backPaginaMuestra.php",
+                    //data: '{Nombre: "' + $("#nombre").val() + '", Apellido: "' + $("#apellido").val() + '"}',
+                    //data: cadPass,
+                    //data: JSON.stringify(cadPass),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    //contentType: "text/ html; charset = utf - 8",
+                    //contentType: "application/json; charset=utf-8",
+                    //dataType: "json",
+                    dataType: "xml"
+                }).done(function (msg) {
+                    //$("#mostrar").html(msg.d);
+                    //console.log(msg);
+                    var datos = msg.getElementsByTagName("string")[0].firstChild.data;
+                    $("#iddatosCasa").html(datos);
+                    console.log(msg);
+                }).fail(manejarErrorAjax).always(function () {
+                });
+            });
+            function manejarErrorAjax(err) {
+                console.log(err.responseText);
+            }
+        })
+        // // Forma 3
+        // var respuesta=document.getElementById("iddatosCasa");
+        // function cargarReg(){
+        //     var xmlhttp;
+        //     if(Window.XMLHttpRequest){
+        //         xmlhttp=new XMLHttpRequest();
+        //     }else{
+        //         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        //     }
+        //     xmlhttp.onreadystatechange=function(){
+        //         if(xmlhttp.status===200 && xmlhttp.readyState===4){
+        //            var datos = xmlhttp.responseXML;
+        //            var tablaDat = datos.getElementsByTagName("string")[0].firstChild.data;
+        //            respuesta.innerHTML = tablaDat;
+        //            console.log(xmlhttp);                
+        //         }
+        //     }
+        //     xmlhttp.open("POST", "backPaginaMuestra.php", true);
+        //     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+        //     // xmlhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        //     xmlhttp.send();
+        // }
+    </script>
 </body>
 </html>
