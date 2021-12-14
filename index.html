@@ -77,8 +77,8 @@
         </div>                 
     </section>
     <section class="formulario py-4">
-        <div class="cldatosCasa" id="iddatosCasa"></div>        
-        <!-- <div class="cldatosCasa" id="iddatosCasa" onload="cargarReg()"></div> -->
+        <!-- <div class="cldatosCasa" id="iddatosCasa" onload="cargarReg()"></div>         -->
+        <div class="cldatosCasa" id="iddatosCasa" ></div>
     </section>
     <footer class="piedepagina bg-dark text-white text-center text-md-right">
         <div class="container">
@@ -106,12 +106,13 @@
                     //contentType: "text/ html; charset = utf - 8",
                     //contentType: "application/json; charset=utf-8",
                     //dataType: "json",
-                    dataType: "xml"
+                    dataType: "text"
                 }).done(function (msg) {
                     //$("#mostrar").html(msg.d);
                     //console.log(msg);
-                    var datos = msg.getElementsByTagName("string")[0].firstChild.data;
-                    $("#iddatosCasa").html(datos);
+                    // var datos = msg.getElementsByTagName("string")[0].firstChild.data;
+                    // $("#iddatosCasa").html(datos);
+                    $("#iddatosCasa").html(msg);
                     console.log(msg);
                 }).fail(manejarErrorAjax).always(function () {
                 });
