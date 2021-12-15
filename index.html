@@ -11,7 +11,8 @@
     <link type="text/css" rel="stylesheet" href="css/estilos.css">
     <title>Mi casa</title>
 </head>
-<body>
+<body onload="cargarReg()">
+<!-- <body> -->
     <nav class="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
         <div class="container">
             <a href="#" class="navbar-brand">
@@ -76,8 +77,7 @@
             </div>
         </div>                 
     </section>
-    <section class="formulario py-4">
-        <!-- <div class="cldatosCasa" id="iddatosCasa" onload="cargarReg()"></div>         -->
+    <section class="formulario py-4" >
         <div class="cldatosCasa" id="iddatosCasa" ></div>
     </section>
     <footer class="piedepagina bg-dark text-white text-center text-md-right">
@@ -90,57 +90,73 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
-        //Forma 2
-        $(function () {
-            $("#iddatosCasa").show(function () {
-                //var a = $("#idnombre").val();
-                //var b = $("#idcorreo").val();
-                //var cadPass = "Nombre=" + a + "&Correo=" + b;
-                //var cadPass = JSON.stringify({ Nombre: a, Correo: b });
-                $.post({
+        // Forma 1
+            function cargarReg() {
+                $.ajax({
+                    type: "POST",
                     url: "backPaginaMuestra.php",
                     //data: '{Nombre: "' + $("#nombre").val() + '", Apellido: "' + $("#apellido").val() + '"}',
                     //data: cadPass,
                     //data: JSON.stringify(cadPass),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     //contentType: "text/ html; charset = utf - 8",
-                    //contentType: "application/json; charset=utf-8",
+                    // contentType: "application/json; charset=utf-8",
                     //dataType: "json",
-                    dataType: "text"
-                }).done(function (msg) {
-                    //$("#mostrar").html(msg.d);
-                    //console.log(msg);
-                    // var datos = msg.getElementsByTagName("string")[0].firstChild.data;
-                    // $("#iddatosCasa").html(datos);
-                    $("#iddatosCasa").html(msg);
-                    console.log(msg);
-                }).fail(manejarErrorAjax).always(function () {
-                });
-            });
-            function manejarErrorAjax(err) {
-                console.log(err.responseText);
+                    dataType: "text",
+                    success: function (msg) {
+                        $("#iddatosCasa").html(msg);
+                        console.log(msg);
+                    },
+                    error: function (err) {
+                        
+                    }
+                });               
             }
-        })
+        // //Forma 2
+        // $(function () {
+        //     $("#iddatosCasa").show(function () {
+        //         //var a = $("#idnombre").val();
+        //         //var b = $("#idcorreo").val();
+        //         //var cadPass = "Nombre=" + a + "&Correo=" + b;
+        //         //var cadPass = JSON.stringify({ Nombre: a, Correo: b });
+        //         $.post({
+        //             url: "backPaginaMuestra.php",
+        //             //data: '{Nombre: "' + $("#nombre").val() + '", Apellido: "' + $("#apellido").val() + '"}',
+        //             //data: cadPass,
+        //             //data: JSON.stringify(cadPass),
+        //             // contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //             //contentType: "text/ html; charset = utf - 8",
+        //             contentType: "application/json; charset=utf-8",
+        //             //dataType: "json",
+        //             dataType: "text"
+        //         }).done(function (msg) {
+        //             $("#iddatosCasa").html(msg);
+        //             console.log(msg);
+        //         }).fail(manejarErrorAjax).always(function () {
+        //         });
+        //     });
+        //     function manejarErrorAjax(err) {
+        //         console.log(err.responseText);
+        //     }
+        // })
         // // Forma 3
         // var respuesta=document.getElementById("iddatosCasa");
         // function cargarReg(){
         //     var xmlhttp;
-        //     if(Window.XMLHttpRequest){
+        //     if(window.XMLHttpRequest){
         //         xmlhttp=new XMLHttpRequest();
         //     }else{
         //         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         //     }
         //     xmlhttp.onreadystatechange=function(){
-        //         if(xmlhttp.status===200 && xmlhttp.readyState===4){
-        //            var datos = xmlhttp.responseXML;
-        //            var tablaDat = datos.getElementsByTagName("string")[0].firstChild.data;
-        //            respuesta.innerHTML = tablaDat;
+        //         if(this.readyState === 4 && this.status === 200){
+        //            respuesta.innerHTML = xmlhttp.responseText;
         //            console.log(xmlhttp);                
         //         }
         //     }
         //     xmlhttp.open("POST", "backPaginaMuestra.php", true);
-        //     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-        //     // xmlhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        //     // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+        //     xmlhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
         //     xmlhttp.send();
         // }
     </script>
